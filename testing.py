@@ -221,7 +221,6 @@ def batch_crawl(start_batch, config, baseline_exists):
 
         if baseline_exists:
             for new_page in current_batch_filtered.copy():
-                print(new_page.__dict__)
                 if not prompt_add_to_baseline(new_page.url):
                     current_batch_filtered.remove(new_page)
                     config['exclusions'].append(new_page.path)

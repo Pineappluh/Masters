@@ -1,12 +1,8 @@
 import numpy as np
 from sklearn.cluster import MeanShift, estimate_bandwidth
-from PIL import Image
-from skimage.filters import median
 from sklearn.preprocessing import StandardScaler
-from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
 import cv2
-from sklearn.utils.extmath import cartesian
 from collections import defaultdict
 
 
@@ -264,16 +260,3 @@ def find_bounding_box(X, Y):
 
 def box_area(box):
     return (box[1][0] - box[0][0]) * (box[1][1] - box[0][1])
-
-
-
-# load image
-img = cv2.imread("wikipedia-without-text.png")
-img = img[:1000, :]
-segment_image(img, 0.05, 1)
-
-# img = cv2.imread("segmentation-test-small-7.png")
-# segment_image(img, 0.01, 11)
-
-
-cv2.waitKey(0)

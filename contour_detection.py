@@ -69,18 +69,20 @@ def find_bounding_boxes_tree(image_name):
     original = cv2.imread(image_name)
     height, width, _ = original.shape
     img_gray = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
+    # cv2.imwrite('grayscale.png', img_gray)
     # edges_detected = cv2.Canny(img_gray, 100/3, 100)
+    # cv2.imwrite('canny.png', edges_detected)
     # make_edges_white(img_gray)
     laplacian = cv2.Laplacian(img_gray, cv2.CV_16S)
     laplacian = cv2.convertScaleAbs(laplacian)
     _, laplacian = cv2.threshold(laplacian, 15, 255, cv2.THRESH_BINARY)
+    cv2.imwrite('laplacian.png', laplacian)
 
     contours, hier = cv2.findContours(laplacian, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     root, node_list = construct_contour_tree(contours, hier)
 
-    # uncomment to debug
-    color_tree(original, root)
-    cv2.imwrite(image_name, original)
+    # color_tree(original, root)
+    # cv2.imwrite(image_name, original)
     # cv2.waitKey()
 
     root.bounding_box = 0, 0, width, height

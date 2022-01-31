@@ -28,8 +28,9 @@ async function autoScroll(page){
     });
     const context = await browser.newContext({ storageState: 'state.json' });
     const page = await context.newPage();
-    await page.goto('https://www.imdb.com/title/tt0068646/', {waitUntil: 'networkidle'})
-    await page.setViewportSize({ width: 1920, height: 1080});
+    await page.goto('https://www.jayone.org/user/145', {waitUntil: 'networkidle'})
+    await page.setViewportSize({ width: 360, height: 640});
+    await page.screenshot({path: 'example-start.png', fullPage: true});
 
     await autoScroll(page);
 
@@ -57,21 +58,14 @@ async function autoScroll(page){
             });
         });
 
-        let everything_black = "*{";
-        everything_black += "background-color: black !important;";
-        everything_black += "border-color: black !important;";
-        everything_black += "background-image: none !important;";
-        everything_black += "background: none !important;";
-        everything_black += "box-shadow: none !important;";
-        everything_black += "}";
+        await page.addStyleTag({content: '*{background-color: black !important}'})
         await page.addStyleTag({content: 'svg{filter: brightness(0) !important; background: black !important}'});
-        await page.addStyleTag({content: '*{color: rgba(255, 255, 255, 1) !important; text-shadow: none !important; ++}'});
-        await page.addStyleTag({content: everything_black});
         await page.addStyleTag({content: 'iframe{visibility: hidden !important}'});
         await page.addStyleTag({content: 'img{filter: brightness(0) !important; background: black !important}'})
         await page.addStyleTag({content: 'ul{list-style: none !important}'});
     }
 
+    await page.waitForTimeout(1000);
     await page.screenshot({path: 'example.png', fullPage: true});
 
     await browser.close();
